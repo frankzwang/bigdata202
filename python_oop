@@ -1,0 +1,12 @@
+# difference between __new__ and __init__
+# __new__ called first
+class Demo:
+    def __init__(self):
+        print("__init__ called")
+
+
+    def __new__(cls, *args):
+        print("__new__ called")
+        return object.__new__(cls)
+
+d = Demo()
