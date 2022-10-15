@@ -1,5 +1,5 @@
 # difference between __new__ and __init__
-# __new__ called first
+# __new__ got called first
 class Demo:
     def __init__(self):
         print("__init__ called")
