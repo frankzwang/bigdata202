@@ -44,3 +44,20 @@ table.record_result('William', 3)
 table.record_result('Henry', 5)
 table.record_result('Luke', 5)
 print(table.player_rank(1))
+
+
+
+#Merge two lists and de-dedup the result list for the merged lists##############################################################################<
+def unique_names(names1, names2):
+    #print(names12)
+    names12 = names1 + names2 #merged list with dups
+    res = []
+    for item in names12:
+        if item not in res:
+            res.append(item)
+    return res
+
+
+names1 = ["Betty", "Jack", "Mark"]
+names2 = ["Mark", "Suzie", "Jack"]
+print(unique_names(names1, names2)) # should print ['Betty', 'Jack', 'Mark', 'Suzie']
