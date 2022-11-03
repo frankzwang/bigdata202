@@ -23,3 +23,9 @@ SELECT * FROM tblGrade
 SELECT courseID, MAX(score) AS maxScorePerCourse 
 FROM tblGrade
 GROUP BY courseID
+
+--Get the total count of assignments graded every month.
+SELECT Year(createdAt) AS Year, Month(createdAt) AS Month, count(*) as monthlyAsmtGraded 
+FROM tblGrade
+WHERE year(createdAt) = YEAR(GETDATE())
+GROUP BY Year(createdAt), Month(createdAt)
