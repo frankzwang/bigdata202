@@ -29,3 +29,29 @@ SELECT Year(createdAt) AS Year, Month(createdAt) AS Month, count(*) as monthlyAs
 FROM tblGrade
 WHERE year(createdAt) = YEAR(GETDATE())
 GROUP BY Year(createdAt), Month(createdAt)
+
+
+--*********************************************************************************************************************************************
+--Get the student with the largest time gap between 2 activities; only look over their last 4 activities (i.e. 3 gaps to compare)
+--use CTE and windows function to get activity partition by studentID
+--then compare the time gap between each activity for each student and get the biggest time gap
+--sa means student activity
+WITH sa AS(
+			SELECT 
+					studentID,
+					activityAt,
+ 					ROW_NUMBER() OVER (
+										PARTITION BY studentID
+										ORDER BY activityAt
+									 ) rowNum
+			FROM tblActivity 
+     	)
+SELECT top 1
+		a.studentID,
+		DATEDIFF (MINUTE,a.activityAt, b.activityAt) AS gapMinutes,
+		a.activityAt AS lastLoginTime,
+		b.activityAt AS nextLoginTime
+FROM sa a, sa b
+WHERE b.rowNum = a.rowNum + 1
+AND a.rowNum < 5
+ORDER BY studentID,gapMinutes DESC;
