@@ -55,3 +55,10 @@ FROM sa a, sa b
 WHERE b.rowNum = a.rowNum + 1
 AND a.rowNum < 5
 ORDER BY studentID,gapMinutes DESC;
+
+--Get the students with less than 10 activities over the past 30 days. 
+SELECT [studentID], COUNT(studentID) AS loginTimes30D
+FROM tblActivity
+WHERE activityAt >= DateAdd(Day,- 30, GetDate()) 
+GROUP BY [studentID]
+HAVING (COUNT(activityAt)) < 5
