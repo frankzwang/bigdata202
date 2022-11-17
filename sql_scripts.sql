@@ -30,6 +30,17 @@ FROM tblGrade
 WHERE year(createdAt) = YEAR(GETDATE())
 GROUP BY Year(createdAt), Month(createdAt)
 
+--Extract the list of students with courses that are under the average grade of the class.
+WITH avgByCourse AS (
+					SELECT courseID, AVG(score) AS avgScorePerCourse 
+					FROM tblGrade
+					GROUP BY courseID
+					) 
+SELECT g.studentID, g.courseID, g.score, a.avgScorePerCourse 
+FROM tblGrade g
+JOIN avgByCourse a ON a.courseID = g.courseID
+WHERE score < a.avgScorePerCourse
+
 
 --*********************************************************************************************************************************************
 --Get the student with the largest time gap between 2 activities; only look over their last 4 activities (i.e. 3 gaps to compare)
