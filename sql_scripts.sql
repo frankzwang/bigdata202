@@ -84,3 +84,19 @@ WITH RECURSIVE cteFact as
  )
  SELECT n, fact					--result
  FROM cteFact
+
+--RECURSIVE CTE case 2: Corporate Hierarchical 
+--print out employee ID and their manager ID (SQL Server dialect) 
+WITH cteEmp AS
+	(
+		SELECT emp_id, emp_name, manager
+		FROM employee e
+		WHERE manager IS NULL
+		UNION all
+		SELECT e.emp_id,e.emp_name, e.manager
+		FROM cteEmp
+		JOIN e on e.manager = cteEmp.emp_id		--employee.manager (id) is cteEmp.emp_id (next level pointing to 1 up level, recursively to null)
+	 )
+SELECT *
+FROM cteEmp
+ORDER BY emp_id, manager;
