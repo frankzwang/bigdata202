@@ -76,11 +76,11 @@ HAVING (COUNT(activityAt)) < 5
 --RECURSIVE CTE case 1: print out Factorial (MySQL dialect) 
 WITH RECURSIVE cteFact as 
 (
-	SELECT 1 n, 1 fact
+	SELECT 1 n, 1 fact          --anchor
     UNION 	ALL
-    SELECT n+1, (n+1)*fact
+    SELECT n+1, (n+1)*fact		--recursive query
     FROM cteFact
-    WHERE n < 6
+    WHERE n < 6					--termination
  )
- SELECT n, fact
+ SELECT n, fact					--result
  FROM cteFact
