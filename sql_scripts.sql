@@ -41,7 +41,6 @@ FROM tblGrade g
 JOIN avgByCourse a ON a.courseID = g.courseID
 WHERE score < a.avgScorePerCourse
 
-
 --*********************************************************************************************************************************************
 --Get the student with the largest time gap between 2 activities; only look over their last 4 activities (i.e. 3 gaps to compare)
 --use CTE and windows function to get activity partition by studentID
@@ -73,3 +72,15 @@ FROM tblActivity
 WHERE activityAt >= DateAdd(Day,- 30, GetDate()) 
 GROUP BY [studentID]
 HAVING (COUNT(activityAt)) < 5
+
+--RECURSIVE CTE case 1: print out Factorial (MySQL dialect) 
+WITH RECURSIVE cteFact as 
+(
+	SELECT 1 n, 1 fact
+    UNION 	ALL
+    SELECT n+1, (n+1)*fact
+    FROM cteFact
+    WHERE n < 6
+ )
+ SELECT n, fact
+ FROM cteFact
