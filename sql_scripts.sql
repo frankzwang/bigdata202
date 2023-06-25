@@ -89,12 +89,12 @@ WITH RECURSIVE cteFact as
 --print out employee ID and their manager ID (SQL Server dialect) 
 WITH cteEmp AS
 	(
-		SELECT emp_id, emp_name, manager
+		SELECT emp_id, emp_name, manager		--anchor
 		FROM employee e
 		WHERE manager IS NULL
 		UNION all
 		SELECT e.emp_id,e.emp_name, e.manager
-		FROM cteEmp
+		FROM cteEmp								--recursive query
 		JOIN e on e.manager = cteEmp.emp_id		--employee.manager (id) is cteEmp.emp_id (next level pointing to 1 up level, recursively to null)
 	 )
 SELECT *
